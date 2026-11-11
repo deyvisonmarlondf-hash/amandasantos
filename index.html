@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#061a4a">
+<title>Amanda Santos • 15 anos</title>
+<meta property="og:title" content="Amanda Santos • 15 anos">
+<meta property="og:description" content="Você recebeu um convite especial. Deslize para abrir.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#061a4a;--azul:#0c2a78;--ouro:#d4b16a;--texto:#f6ebcb;
+  --fn:'Pinyon Script','Brush Script MT',cursive;--ft:'Cormorant Garamond',Georgia,serif;--fx:'Jost',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--texto);font-family:var(--fx);font-weight:300;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:2px solid var(--ouro);outline-offset:3px}
+[hidden]{display:none!important}
+#deck{position:fixed;inset:0;overflow:hidden;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+#trilho{display:flex;height:100%;transition:transform .9s cubic-bezier(.65,0,.35,1);will-change:transform}
+.pg{flex:0 0 100%;height:100%;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px;padding:76px 28px 72px;overflow:hidden}
+.bg{position:absolute;inset:0;background:linear-gradient(160deg,#1550b0,var(--bg) 70%) center/cover}
+.bg video{width:100%;height:100%;object-fit:cover;display:block}
+.bg::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(6,26,74,.5),rgba(6,26,74,.85))}
+#p-capa{justify-content:flex-end}
+#p-capa .bg::after{background:linear-gradient(180deg,rgba(6,26,74,0) 30%,rgba(6,26,74,.93) 100%)}
+.pg>*:not(.bg){position:relative;z-index:1}
+
+/* entrada delicada de todos os textos (fade + subida + desfoque suave) */
+.in{opacity:0;transform:translateY(18px);filter:blur(4px);transition:opacity 1.2s ease var(--d,0s),transform 1.2s ease var(--d,0s),filter 1.2s ease var(--d,0s)}
+.pg.on .in{opacity:1;transform:none;filter:none}
+
+.kicker{font-family:var(--ft);font-style:italic;font-size:1.35rem;line-height:1.4}
+.nomes{font-family:var(--fn);font-weight:400;font-size:clamp(3.4rem,17vw,6.6rem);line-height:1.08;color:var(--ouro)}
+h2{font-family:var(--ft);font-weight:500;font-size:clamp(1.9rem,7vw,2.8rem);line-height:1.15}
+.rot{font-size:.95rem;color:var(--ouro);letter-spacing:.02em}
+.grande{font-family:var(--ft);font-size:clamp(1.6rem,6vw,2.3rem)}
+.fio{width:56px;height:1px;background:var(--ouro)}
+.pais{display:flex;gap:36px;justify-content:center;flex-wrap:wrap}
+.pais div{font-family:var(--ft);font-size:1.2rem;line-height:1.5}
+.pais small{display:block;font-family:var(--fx);font-size:.9rem;color:var(--ouro);margin-bottom:4px}
+.aviso{max-width:340px;font-size:.92rem;opacity:.8}
+.cont{display:flex;gap:10px;justify-content:center}
+.cont div{min-width:70px;padding:12px 6px;border:1px solid rgba(212,177,106,.55);border-radius:18px;background:rgba(255,255,255,.06)}
+.cont b{display:block;font-family:var(--ft);font-size:2rem;font-weight:500;line-height:1.1}
+.cont span{font-size:.8rem;opacity:.8}
+
+/* botões com respiração suave em loop */
+.btn{display:inline-block;text-decoration:none;border:0;border-radius:980px;padding:13px 30px;font-weight:400;font-size:.98rem;background:rgba(255,255,255,.14);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:background .2s;animation:respira 3.6s ease-in-out 1.8s infinite}
+.btn.in{transition:opacity 1.2s ease var(--d,0s),transform 1.2s ease var(--d,0s),filter 1.2s ease var(--d,0s),background .2s}
+.btn:hover{background:rgba(255,255,255,.26);animation-play-state:paused}
+.btn.ouro{background:var(--ouro);color:var(--bg);font-weight:500}
+.btn.ouro:hover{background:#e2c382}
+@keyframes respira{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(212,177,106,0)}50%{transform:scale(1.05);box-shadow:0 0 18px 2px rgba(212,177,106,.4)}}
+
+#dots{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;gap:10px;z-index:20}
+#dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.35);transition:.3s}
+#dots i.on{background:var(--ouro);transform:scale(1.5)}
+#musicBtn{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));right:14px;z-index:30;width:42px;height:42px;border-radius:50%;border:1px solid rgba(246,235,203,.75);background:rgba(0,0,0,.22);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:none;place-items:center;font-size:1.1rem}
+#musicBtn.ativo{display:grid}
+#musicBtn.tocando{animation:giro 6s linear infinite}
+@keyframes giro{to{transform:rotate(360deg)}}
+
+#modal{position:fixed;inset:0;z-index:50;background:rgba(2,10,35,.82);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px}
+#modal.on{display:flex}
+.caixa{width:min(380px,100%);max-height:92svh;overflow:auto;background:var(--azul);border:1px solid rgba(212,177,106,.55);border-radius:28px;padding:32px 24px;text-align:center;display:grid;gap:14px}
+#modal.on .caixa{animation:pop .5s cubic-bezier(.2,.9,.3,1.15)}
+@keyframes pop{from{opacity:0;transform:scale(.9) translateY(14px)}}
+.caixa label{display:grid;gap:6px;text-align:left;font-size:.9rem}
+.caixa input{font:inherit;padding:13px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:var(--texto)}
+.caixa .btn{width:100%}
+.caixa p{font-size:.95rem;opacity:.88;line-height:1.5}
+.caixa .rot{opacity:1}
+
+/* cantinho pequeno que "tenta virar" a página */
+#canto{position:fixed;right:0;bottom:0;z-index:25;width:92px;height:92px;border:0;background:none;transform-origin:100% 100%;filter:drop-shadow(-2px -2px 5px rgba(0,0,0,.4));animation:dobra 3.4s ease-in-out infinite}
+@keyframes dobra{0%,55%,100%{transform:scale(1)}68%{transform:scale(1.25)}80%{transform:scale(1.04)}90%{transform:scale(1.16)}}
+#canto::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#020b26,#0c2a78);clip-path:polygon(100% 0,100% 100%,0 100%)}
+#canto::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#fbf4e2,#e6d8b8);clip-path:polygon(0 0,100% 0,0 100%)}
+#canto span{position:absolute;z-index:1;left:32%;top:32%;transform:translate(-50%,-50%) rotate(-45deg);white-space:nowrap;font-family:var(--ft);font-style:italic;font-size:.68rem;color:#4a3d27}
+
+/* página virando de verdade */
+#folha{position:fixed;inset:0;z-index:40;perspective:1800px;pointer-events:none;display:none;overflow:hidden}
+#folha .f{position:absolute;inset:0;transform-origin:left center;transform-style:preserve-3d;animation:vira 1.1s cubic-bezier(.6,0,.3,1) forwards}
+#folha .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+#folha .verso{transform:rotateY(180deg);background:linear-gradient(90deg,#e6d8b8,#fbf4e2)}
+#folha .pg{width:100%;height:100%;flex:none}
+#folha .sombra{position:absolute;inset:0;z-index:5;background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.55));opacity:0;animation:somb 1.1s forwards}
+@keyframes vira{to{transform:rotateY(-180deg)}}
+@keyframes somb{to{opacity:1}}
+
+/* pétalas azuis da página final */
+#petalas{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.petala{position:absolute;top:0;border-radius:0 100% 0 100%;opacity:.8;animation:cai 10s linear infinite;animation-play-state:paused}
+.pg.on .petala{animation-play-state:running}
+@keyframes cai{0%{transform:translate3d(0,-12vh,0) rotate(0)}50%{transform:translate3d(var(--s),50vh,0) rotate(200deg)}100%{transform:translate3d(0,112vh,0) rotate(400deg)}}
+
+</style>
+</head>
+<body>
+<main id="deck"><div id="trilho"></div></main>
+<button id="canto" aria-label="Próxima página"><span>Próxima página</span></button>
+<div id="folha" aria-hidden="true"></div>
+<nav id="dots" aria-hidden="true"></nav>
+<button id="musicBtn" aria-label="Ligar ou desligar a música">♫</button>
+<div id="modal" role="dialog" aria-modal="true"><div class="caixa" id="caixa"></div></div>
+<audio id="audio" loop preload="none"></audio>
+
+<script>
+/* ==========================================================================
+   CONFIGURAÇÕES — EDITE SOMENTE ESTE BLOCO
+   TROQUE OS TEXTOS "COLE ... AQUI" PELOS SEUS DADOS (APAGUE O TEXTO PARA ESCONDER)
+   Imagens, vídeos e sons: link da internet OU nome do arquivo na mesma pasta.
+   ========================================================================== */
+const CONFIG = {
+
+  /* DEBUTANTE */
+  NOME: "AMANDA SANTOS",
+  IDADE: "15",
+
+  /* DATA E HORA (AAAA-MM-DDTHH:MM:SS) — EXEMPLO, TROQUE PELA DATA REAL */
+  DATA_HORA: "2026-12-12T19:30:00",
+
+  /* LOCAL */
+  LOCAL_NOME: "NOME DO LOCAL AQUI",
+  LOCAL_ENDERECO: "ENDEREÇO COMPLETO AQUI",
+  LINK_MAPS: "COLE LINK DO GOOGLE MAPS AQUI",      /* SE NÃO COLAR, O MAPA É GERADO PELO ENDEREÇO */
+  AVISO_CHEGADA: "Pedimos que chegue com 30 minutos de antecedência.",
+
+  /* DRESS CODE (JANELA NA PÁGINA "DETALHES") — TEXTO DE EXEMPLO, TROQUE */
+  DRESS_CODE: "TRAJE ESPORTE FINO",
+  DRESS_DETALHE: "Sugerimos roupas elegantes e confortáveis para dançar. Pedimos que evite tons de azul-marinho, a cor da nossa festa.",
+
+  /* SUGESTÕES DE PRESENTE (JANELA NA PÁGINA "DETALHES") — TEXTO DE EXEMPLO, TROQUE */
+  PRESENTE_TEXTO: "Sua presença é o nosso maior presente! Mas, se quiser nos presentear, aqui vão algumas sugestões:",
+  PRESENTE_LISTA: ["Vale-presente", "Lembrança carinhosa", "Contribuição via Pix"],
+  PIX: "COLE A CHAVE PIX AQUI",
+  LISTA_LINK: "COLE LINK DA LISTA DE PRESENTES AQUI",
+
+  /* MÚSICA (LINK DO YOUTUBE OU ARQUIVO MP3) — COMEÇA NO PRIMEIRO TOQUE DO CONVIDADO */
+  MUSICA: "https://youtu.be/36YnV9STBqc",
+  SOM_VIRADA: "COLE O MP3 DO SOM DE VIRAR A PÁGINA AQUI (OPCIONAL)",
+
+  /* PAIS (APAGUE OS NOMES, DEIXANDO [], PARA ESCONDER A PÁGINA) */
+  PAIS: ["NOME DA MÃE AQUI", "NOME DO PAI AQUI"],
+
+  /* FUNDOS DE CADA PÁGINA: IMAGEM E/OU VÍDEO MP4 (TOCA MUDO EM LOOP) */
+  FUNDOS: {
+    CAPA:  { IMAGEM: "foto-amanda.jpg", VIDEO: "https://www.image2url.com/r2/default/videos/1794412188995-d199f37f-16e9-48e8-9fd0-3cc8f9045767.mp4" },
+    PAIS:  { IMAGEM: "https://i.imgur.com/29SI83o.jpeg", VIDEO: "COLE LINK DO VÍDEO MP4 AQUI" },
+    DATA:  { IMAGEM: "AQUI", VIDEO: "https://www.image2url.com/r2/default/videos/1794412654731-563733e0-251a-4315-a9a2-762dc5545ea8.mp4" },
+    LOCAL: { IMAGEM: "COLE LINK DA IMAGEM AQUI", VIDEO: "COLE LINK DO VÍDEO MP4 AQUI" },
+    DETALHES: { IMAGEM: "https://i.imgur.com/iBy2KpG.jpeg", VIDEO: "COLE LINK DO VÍDEO MP4 AQUI" },
+    FINAL: { IMAGEM: "https://i.imgur.com/Kf7iEs8.jpeg", VIDEO: "" }
+  },
+
+  /* CONFIRMAÇÃO DE PRESENÇA */
+  RSVP: {
+    WHATSAPP: "COLE O NÚMERO DO WHATSAPP AQUI",    /* EX: 5561999999999 */
+    WEBHOOK_URL: "COLE LINK DO GOOGLE SHEETS AQUI (OPCIONAL)",
+    PEDIR_TELEFONE: true,
+    PRAZO: "COLE A DATA LIMITE AQUI"               /* EX: 30/11 */
+  },
+
+  /* TEXTOS */
+  TEXTOS: {
+    CAPA_TOPO: "Você está convidado(a)<br>para os meus 15 anos",
+    PAIS_TITULO: "Com a bênção de seus pais",
+    PAIS_FRASE: "convidam para a celebração<br>dos 15 anos de",
+    SAVE_TITULO: "Salve a data",
+    DETALHES_TITULO: "Detalhes importantes",
+    FINAL_TITULO: "Contamos com você",
+    FINAL_FRASE: "Sua presença fará esta noite<br>ainda mais especial.",
+    AGRADECIMENTO: "Sua presença está confirmada e fará esta noite ainda mais especial.<br>Mal posso esperar para celebrar com você."
+  },
+
+  /* CORES */
+  CORES: { FUNDO: "#061A4A", AZUL: "#0C2A78", OURO: "#D4B16A", TEXTO: "#F6EBCB" }
+};
+/* ======================== FIM DAS CONFIGURAÇÕES ======================== */
+
+
+const C = CONFIG, T = C.TEXTOS, R = C.RSVP, $ = s => document.querySelector(s), enc = encodeURIComponent;
+const ok = v => !!v && !/AQUI/i.test(v);
+const root = document.documentElement.style;
+root.setProperty('--bg', C.CORES.FUNDO); root.setProperty('--azul', C.CORES.AZUL);
+root.setProperty('--ouro', C.CORES.OURO); root.setProperty('--texto', C.CORES.TEXTO);
+
+const d = new Date(C.DATA_HORA), pad = n => String(n).padStart(2, '0');
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const f = o => new Intl.DateTimeFormat('pt-BR', o).format(d);
+const dia = pad(d.getDate()), mes = cap(f({ month: 'long' })), ano = d.getFullYear(), sem = cap(f({ weekday: 'long' }));
+const hora = `${pad(d.getHours())}h${pad(d.getMinutes())}`;
+const nome = C.NOME.toLowerCase().replace(/(^|\s)\S/g, c => c.toUpperCase());
+document.title = `${nome} • ${C.IDADE} anos`;
+
+const mapa = ok(C.LINK_MAPS) ? C.LINK_MAPS : 'https://www.google.com/maps/search/?api=1&query=' + enc(C.LOCAL_NOME + ' ' + C.LOCAL_ENDERECO);
+const wa = (n, msg) => `https://wa.me/${String(n).replace(/\D/g, '')}?text=${enc(msg)}`;
+
+const bg = k => {
+  const x = (C.FUNDOS && C.FUNDOS[k]) || {};
+  return `<div class="bg"${ok(x.IMAGEM) ? ` style="background-image:url('${x.IMAGEM}')"` : ''}>${ok(x.VIDEO) ? `<video src="${x.VIDEO}" muted loop playsinline preload="metadata"></video>` : ''}</div>`;
+};
+const temPais = C.PAIS && C.PAIS.length;
+const temDress = !!C.DRESS_CODE, temPres = ok(C.PRESENTE_TEXTO) || (C.PRESENTE_LISTA && C.PRESENTE_LISTA.length);
+
+const paginas = [
+  `<section class="pg" id="p-capa">${bg('CAPA')}
+    <p class="kicker in">${T.CAPA_TOPO}</p>
+    <h1 class="nomes in">${nome}</h1>
+    <p class="rot in">${C.IDADE} anos</p>
+    <p class="aviso in" style="opacity:.6;font-size:.8rem">Deslize para o lado ou toque em Próxima página</p></section>`,
+
+  temPais ? `<section class="pg">${bg('PAIS')}
+    <h2 class="in">${T.PAIS_TITULO}</h2>
+    <div class="pais in"><div><small>Pais</small>${C.PAIS.join('<br>')}</div></div>
+    <div class="fio in"></div>
+    <p class="kicker in">${T.PAIS_FRASE}</p>
+    <div class="nomes in" style="font-size:clamp(2.6rem,13vw,4.6rem)">${nome}</div></section>` : '',
+
+  `<section class="pg">${bg('DATA')}
+    <h2 class="in">${T.SAVE_TITULO}</h2>
+    <p class="grande in">${dia} ${mes} · ${ano}</p>
+    <div class="cont in" id="cont"></div></section>`,
+
+  `<section class="pg">${bg('LOCAL')}
+    <p class="rot in">Quando</p>
+    <p class="grande in">${dia} | ${mes} | ${ano}</p>
+    <p class="in">${sem}, às ${hora}</p>
+    <div class="fio in"></div>
+    <p class="rot in">Onde</p>
+    <p class="grande in">${C.LOCAL_NOME}</p>
+    <p class="in" style="opacity:.8">${C.LOCAL_ENDERECO}</p>
+    <a class="btn ouro in" href="${mapa}" target="_blank" rel="noopener">Saiba como chegar</a>
+    <p class="aviso in">${C.AVISO_CHEGADA}</p></section>`,
+
+  (temDress || temPres) ? `<section class="pg">${bg('DETALHES')}
+    <p class="rot in">Informações</p>
+    <h2 class="in">${T.DETALHES_TITULO}</h2>
+    <div class="fio in"></div>
+    ${temDress ? '<button class="btn ouro in" id="bDress">Dress code</button>' : ''}
+    ${temPres ? '<button class="btn in" id="bPres">Sugestões de presente</button>' : ''}</section>` : '',
+
+  `<section class="pg" id="p-final">${bg('FINAL')}<div id="petalas" aria-hidden="true"></div>
+    <h2 class="in">${T.FINAL_TITULO}</h2>
+    <p class="kicker in">${T.FINAL_FRASE}</p>
+    <button class="btn ouro in" id="abrirRsvp">Confirmar presença</button>
+    ${ok(R.WHATSAPP) ? `<p class="aviso in">Tem alguma dúvida?<br><a href="${wa(R.WHATSAPP, `Olá! Tenho uma dúvida sobre os 15 anos de ${nome}.`)}" target="_blank" rel="noopener" style="color:var(--ouro)">Pergunte pelo WhatsApp.</a></p>` : ''}
+    <button class="btn in" id="rever">Rever o convite</button></section>`
+].filter(Boolean);
+
+$('#trilho').innerHTML = paginas.join('');
+const pgs = [...document.querySelectorAll('.pg')];
+$('#dots').innerHTML = pgs.map(() => '<i></i>').join('');
+const dots = [...document.querySelectorAll('#dots i')];
+
+/* pétalas azuis caindo na página final */
+$('#petalas').innerHTML = Array.from({ length: 26 }, () => {
+  const s = 10 + Math.random() * 14, cs = ['#8fb4ff', '#5b8def', '#2f63d6', '#a9c4ff'];
+  return `<i class="petala" style="left:${(Math.random() * 100).toFixed(1)}%;width:${s.toFixed(0)}px;height:${(s * 1.5).toFixed(0)}px;background:${cs[Math.random() * 4 | 0]};--s:${(Math.random() * 80 - 40) | 0}px;animation-duration:${(7 + Math.random() * 7).toFixed(1)}s;animation-delay:-${(Math.random() * 12).toFixed(1)}s"></i>`;
+}).join('');
+
+/* ---------- carrossel horizontal ---------- */
+const sVira = ok(C.SOM_VIRADA) ? new Audio(C.SOM_VIRADA) : null;
+const trilho = $('#trilho'), folha = $('#folha'); let atual = -1, busy = false;
+function ir(n, som = true) {
+  n = Math.max(0, Math.min(pgs.length - 1, n));
+  if (n === atual) return;
+  if (som && sVira && atual >= 0) { sVira.currentTime = 0; sVira.play().catch(() => {}); }
+  atual = n;
+  trilho.style.transform = `translateX(${-n * 100}%)`;
+  pgs.forEach((p, i) => {
+    p.classList.toggle('on', i === n);
+    const v = p.querySelector('video');
+    if (v) i === n ? v.play().catch(() => {}) : v.pause();
+  });
+  dots.forEach((x, i) => x.classList.toggle('on', i === n));
+  $('#canto').hidden = n === pgs.length - 1;
+}
+/* virar página de verdade: a página atual gira sobre a lateral esquerda e revela a próxima */
+function virar(n) {
+  n = Math.max(0, Math.min(pgs.length - 1, n));
+  if (busy || n === atual) return;
+  busy = true;
+  const c = pgs[atual].cloneNode(true);
+  c.removeAttribute('id'); c.querySelectorAll('video').forEach(v => v.remove());
+  folha.innerHTML = '<div class="f"><div class="face frente"></div><div class="face verso"></div></div>';
+  const fr = folha.querySelector('.frente'); fr.append(c); fr.insertAdjacentHTML('beforeend', '<i class="sombra"></i>');
+  folha.style.display = 'block';
+  trilho.style.transition = 'none'; ir(n); void trilho.offsetWidth; trilho.style.transition = '';
+  const fim = () => { folha.style.display = 'none'; folha.innerHTML = ''; busy = false; };
+  folha.firstChild.addEventListener('animationend', e => { if (e.animationName === 'vira') fim(); });
+  setTimeout(() => { if (busy) fim(); }, 1500);
+}
+pgs.forEach(p => p.querySelectorAll('.in').forEach((el, i) => el.style.setProperty('--d', (.45 + i * .12) + 's')));
+$('#canto').onclick = () => virar(atual + 1);
+$('#rever').onclick = () => ir(0);
+
+const deck = $('#deck'); let x0 = null, dx = 0, tw = 0;
+deck.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; dx = 0; trilho.style.transition = 'none'; }, { passive: true });
+deck.addEventListener('touchmove', e => { if (x0 === null) return; dx = e.touches[0].clientX - x0; trilho.style.transform = `translateX(calc(${-atual * 100}% + ${dx}px))`; }, { passive: true });
+deck.addEventListener('touchend', () => {
+  if (x0 === null) return; x0 = null; trilho.style.transition = '';
+  const alvo = Math.abs(dx) > 60 ? atual + (dx < 0 ? 1 : -1) : atual;
+  trilho.style.transform = `translateX(${-atual * 100}%)`;
+  ir(alvo);
+});
+deck.addEventListener('wheel', e => { const n = Date.now(), v = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY; if (n - tw < 900 || Math.abs(v) < 20) return; tw = n; ir(atual + (v > 0 ? 1 : -1)); }, { passive: true });
+addEventListener('keydown', e => {
+  if (modal.classList.contains('on')) return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown') virar(atual + 1);
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') ir(atual - 1);
+});
+ir(0, false);
+
+/* contagem regressiva */
+function conta() {
+  const dif = d - new Date(), el = $('#cont');
+  if (dif <= 0) { el.innerHTML = '<p class="grande">Hoje é o grande dia!</p>'; return; }
+  const v = [Math.floor(dif / 864e5), Math.floor(dif % 864e5 / 36e5), Math.floor(dif % 36e5 / 6e4), Math.floor(dif % 6e4 / 1e3)];
+  el.innerHTML = v.map((n, i) => `<div><b>${pad(n)}</b><span>${['Dias', 'Horas', 'Min', 'Seg'][i]}</span></div>`).join('');
+}
+conta(); setInterval(conta, 1000);
+
+/* música (YouTube ou MP3): começa no primeiro toque do convidado */
+const audio = $('#audio'), mb = $('#musicBtn'), MUS = ok(C.MUSICA) ? C.MUSICA : null;
+const ytId = u => { const m = String(u).match(/(?:youtu\.be\/|[?&]v=|\/shorts\/|\/embed\/|\/live\/)([\w-]{11})/); return m ? m[1] : null; };
+const MID = MUS && ytId(MUS);
+let mp = null, mReady = false, pend = false;
+const tocando = () => MID ? !!(mp && mReady && mp.getPlayerState() === 1) : !audio.paused;
+function tocar(on) {
+  if (MID) { if (!mReady) { pend = on; return; } on ? mp.playVideo() : mp.pauseVideo(); }
+  else if (on) audio.play().then(() => mb.classList.add('tocando')).catch(() => {});
+  else { audio.pause(); mb.classList.remove('tocando'); }
+}
+if (MUS) {
+  mb.classList.add('ativo');
+  if (MID) {
+    const box = document.createElement('div'); box.id = 'ytm';
+    box.style.cssText = 'position:fixed;right:0;top:0;width:200px;height:200px;opacity:.01;pointer-events:none;z-index:0';
+    document.body.appendChild(box);
+    const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s);
+    window.onYouTubeIframeAPIReady = () => { mp = new YT.Player('ytm', { videoId: MID, playerVars: { controls: 0, playsinline: 1, rel: 0 }, events: {
+      onReady: () => { mReady = true; mp.setVolume(70); if (pend) mp.playVideo(); },
+      onStateChange: e => { if (e.data === 0) { mp.seekTo(0); mp.playVideo(); } mb.classList.toggle('tocando', e.data === 1); } } }); };
+  } else audio.src = MUS;
+  const evs = ['pointerdown', 'keydown', 'touchend'];
+  const parar = () => evs.forEach(t => removeEventListener(t, iniciar));
+  function iniciar(e) { if (e.target.closest && e.target.closest('#musicBtn')) return; tocar(true); parar(); }
+  evs.forEach(t => addEventListener(t, iniciar));
+  mb.onclick = e => { e.stopPropagation(); parar(); tocar(!tocando()); };
+}
+
+/* janelinhas dentro do convite */
+const modal = $('#modal'), caixa = $('#caixa');
+const fechar = () => modal.classList.remove('on');
+modal.onclick = e => { if (e.target === modal) fechar(); };
+const abrir = h => { caixa.innerHTML = h + '<button class="btn" id="fx">Fechar</button>'; modal.classList.add('on'); $('#fx').onclick = fechar; };
+
+if (temDress) $('#bDress').onclick = () => abrir(
+  `<p class="rot">Dress code</p><h2>${cap(C.DRESS_CODE.toLowerCase())}</h2>${ok(C.DRESS_DETALHE) ? `<p>${C.DRESS_DETALHE}</p>` : ''}`);
+
+if (temPres) $('#bPres').onclick = () => {
+  abrir(`<p class="rot">Presentes</p><h2>Sugestões de presente</h2>
+    ${ok(C.PRESENTE_TEXTO) ? `<p>${C.PRESENTE_TEXTO}</p>` : ''}
+    ${(C.PRESENTE_LISTA || []).map(i => `<p>• ${i}</p>`).join('')}
+    ${ok(C.PIX) ? '<button class="btn ouro" id="cp">Copiar chave Pix</button>' : ''}
+    ${ok(C.LISTA_LINK) ? `<a class="btn ouro" style="text-align:center" href="${C.LISTA_LINK}" target="_blank" rel="noopener">Ver lista de presentes</a>` : ''}`);
+  const cp = $('#cp');
+  if (cp) cp.onclick = () => { (navigator.clipboard ? navigator.clipboard.writeText(C.PIX) : Promise.reject()).then(() => cp.textContent = 'Chave copiada!').catch(() => cp.textContent = C.PIX); };
+};
+
+/* confirmação de presença */
+$('#abrirRsvp').onclick = () => {
+  caixa.innerHTML = `
+    <p class="rot">Confirmação</p><h2>Confirmar presença</h2>
+    <p>Preencha seus dados para confirmar que estará conosco.</p>
+    <p style="font-size:.85rem;opacity:.7">Por gentileza, confirme sua presença${ok(R.PRAZO) ? ' até ' + R.PRAZO : ''}.</p>
+    <form id="fr" style="display:grid;gap:14px">
+      <label>Nome completo<input name="nome" required autocomplete="name"></label>
+      ${R.PEDIR_TELEFONE ? '<label>Telefone (opcional)<input name="tel" type="tel" autocomplete="tel"></label>' : ''}
+      <button class="btn ouro" type="submit">Confirmar</button>
+    </form>`;
+  modal.classList.add('on');
+  $('#fr').onsubmit = e => {
+    e.preventDefault();
+    const n = e.target.nome.value.trim(), tel = e.target.tel ? e.target.tel.value.trim() : '';
+    if (ok(R.WEBHOOK_URL)) fetch(R.WEBHOOK_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ nome: n, telefone: tel, data: new Date().toISOString() }) }).catch(() => {});
+    if (ok(R.WHATSAPP)) window.open(wa(R.WHATSAPP, `Olá! Aqui é ${n}${tel ? ' (' + tel + ')' : ''}. Confirmo minha presença nos 15 anos de ${nome} (${dia}/${pad(d.getMonth() + 1)}/${ano}).`), '_blank');
+    caixa.innerHTML = `
+      <h2>Obrigado(a), ${n.split(' ')[0]}!</h2>
+      <p>${T.AGRADECIMENTO}</p>
+      <p>Com carinho,<br><b>${nome}</b></p>
+      <button class="btn" id="fx">Fechar</button>`;
+    $('#fx').onclick = fechar;
+  };
+};
+addEventListener('keydown', e => { if (e.key === 'Escape') fechar(); });
+</script>
+</body>
+</html>
