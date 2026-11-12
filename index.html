@@ -9,7 +9,6 @@
 <meta property="og:description" content="Você recebeu um convite especial. Deslize para abrir.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#061a4a;--azul:#0c2a78;--ouro:#d4b16a;--texto:#f6ebcb;
   --fn:'Pinyon Script','Brush Script MT',cursive;--ft:'Cormorant Garamond',Georgia,serif;--fx:'Jost',system-ui,sans-serif}
@@ -76,8 +75,9 @@ h2{font-family:var(--ft);font-weight:500;font-size:clamp(1.9rem,7vw,2.8rem);line
 .caixa .rot{opacity:1}
 
 /* cantinho pequeno que "tenta virar" a página */
-#canto{position:fixed;right:0;bottom:0;z-index:25;width:92px;height:92px;border:0;background:none;transform-origin:100% 100%;filter:drop-shadow(-2px -2px 5px rgba(0,0,0,.4));animation:dobra 3.4s ease-in-out infinite}
-@keyframes dobra{0%,55%,100%{transform:scale(1)}68%{transform:scale(1.25)}80%{transform:scale(1.04)}90%{transform:scale(1.16)}}
+#canto{position:fixed;right:0;bottom:0;z-index:25;width:92px;height:92px;border:0;background:none;transform-origin:100% 100%;filter:drop-shadow(-2px -2px 5px rgba(0,0,0,.4));animation:dobra 6s ease-in-out infinite}
+@keyframes dobra{0%,72%,100%{transform:scale(1)}80%{transform:scale(1.25)}88%{transform:scale(1.04)}95%{transform:scale(1.16)}}
+.mono{display:block;margin:0 auto;width:min(var(--mw,340px),92vw);height:auto;max-height:46vh;object-fit:contain}
 #canto::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#020b26,#0c2a78);clip-path:polygon(100% 0,100% 100%,0 100%)}
 #canto::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#fbf4e2,#e6d8b8);clip-path:polygon(0 0,100% 0,0 100%)}
 #canto span{position:absolute;z-index:1;left:32%;top:32%;transform:translate(-50%,-50%) rotate(-45deg);white-space:nowrap;font-family:var(--ft);font-style:italic;font-size:.68rem;color:#4a3d27}
@@ -121,13 +121,33 @@ const CONFIG = {
   NOME: "AMANDA SANTOS",
   IDADE: "15",
 
+  /* MONOGRAMA (PNG COM FUNDO TRANSPARENTE, IDEAL 1000 A 1200px DE LARGURA, SEM MARGEM SOBRANDO)
+     LARGURA = TAMANHO EM px. AUMENTE PARA CRESCER (NO CELULAR NUNCA PASSA DE 92% DA TELA)
+     CAPA: ARQUIVO / LARGURA | PÁGINA DOS PAIS: ARQUIVO_PAIS / LARGURA_PAIS | PÁGINA FINAL: ARQUIVO_FINAL / LARGURA_FINAL
+     SE ARQUIVO_PAIS OU ARQUIVO_FINAL NÃO FOREM PREENCHIDOS, USA O MONOGRAMA DA CAPA.
+     PARA ESCONDER O MONOGRAMA NA PÁGINA FINAL, COLOQUE LARGURA_FINAL: 0 */
+  MONOGRAMA: {
+    ARQUIVO: "https://i.imgur.com/4u09BHH.png",       LARGURA: 420,
+    ARQUIVO_PAIS: "https://i.imgur.com/IPQlgHe.png",       LARGURA_PAIS: 180,
+    ARQUIVO_FINAL: "https://i.imgur.com/4u09BHH.png",          LARGURA_FINAL: 250
+  },
+
+  /* FONTES — TROQUE PELO NOME EXATO DE QUALQUER FONTE DO GOOGLE FONTS
+     OU COLOQUE O ARQUIVO (.ttf, .woff, .woff2) NA MESMA PASTA E ESCREVA O NOME EM ARQUIVO
+     SCRIPT = NOME EM CURSIVA | TITULO = TÍTULOS E FRASES | TEXTO = TEXTOS MENORES E BOTÕES */
+  FONTES: {
+    SCRIPT: { FAMILIA: "Pinyon Script",       ARQUIVO: "" },
+    TITULO: { FAMILIA: "Cormorant Garamond",  ARQUIVO: "" },
+    TEXTO:  { FAMILIA: "Jost",                ARQUIVO: "" }
+  },
+
   /* DATA E HORA (AAAA-MM-DDTHH:MM:SS) — EXEMPLO, TROQUE PELA DATA REAL */
   DATA_HORA: "2026-12-12T19:30:00",
 
   /* LOCAL */
-  LOCAL_NOME: "NOME DO LOCAL AQUI",
-  LOCAL_ENDERECO: "ENDEREÇO COMPLETO AQUI",
-  LINK_MAPS: "COLE LINK DO GOOGLE MAPS AQUI",      /* SE NÃO COLAR, O MAPA É GERADO PELO ENDEREÇO */
+  LOCAL_NOME: "Sítio Verde Flor",
+  LOCAL_ENDERECO: "JD Morumbi - Chacara, 02 - Conj Q - Planaltina, Brasília - DF, 73307-990",
+  LINK_MAPS: "https://www.google.com/maps/place//data=!4m2!3m1!19sChIJCz2QGLRvWpMRzygOZt3i1nE",      /* SE NÃO COLAR, O MAPA É GERADO PELO ENDEREÇO */
   AVISO_CHEGADA: "Pedimos que chegue com 30 minutos de antecedência.",
 
   /* DRESS CODE (JANELA NA PÁGINA "DETALHES") — TEXTO DE EXEMPLO, TROQUE */
@@ -141,25 +161,25 @@ const CONFIG = {
   LISTA_LINK: "COLE LINK DA LISTA DE PRESENTES AQUI",
 
   /* MÚSICA (LINK DO YOUTUBE OU ARQUIVO MP3) — COMEÇA NO PRIMEIRO TOQUE DO CONVIDADO */
-  MUSICA: "https://youtu.be/36YnV9STBqc",
+  MUSICA: "https://jumpshare.com/s/tHB3By7xykkgbGDijhms",
   SOM_VIRADA: "COLE O MP3 DO SOM DE VIRAR A PÁGINA AQUI (OPCIONAL)",
 
   /* PAIS (APAGUE OS NOMES, DEIXANDO [], PARA ESCONDER A PÁGINA) */
-  PAIS: ["NOME DA MÃE AQUI", "NOME DO PAI AQUI"],
+  PAIS: ["Cláudia Soares", "Evandro Lima"],
 
   /* FUNDOS DE CADA PÁGINA: IMAGEM E/OU VÍDEO MP4 (TOCA MUDO EM LOOP) */
   FUNDOS: {
     CAPA:  { IMAGEM: "foto-amanda.jpg", VIDEO: "https://www.image2url.com/r2/default/videos/1794412188995-d199f37f-16e9-48e8-9fd0-3cc8f9045767.mp4" },
     PAIS:  { IMAGEM: "https://i.imgur.com/29SI83o.jpeg", VIDEO: "COLE LINK DO VÍDEO MP4 AQUI" },
-    DATA:  { IMAGEM: "AQUI", VIDEO: "https://www.image2url.com/r2/default/videos/1794412654731-563733e0-251a-4315-a9a2-762dc5545ea8.mp4" },
+    DATA:  { IMAGEM: "COLE LINK DA IMAGEM AQUI", VIDEO: "https://www.image2url.com/r2/default/videos/1794412654731-563733e0-251a-4315-a9a2-762dc5545ea8.mp4" },
     LOCAL: { IMAGEM: "COLE LINK DA IMAGEM AQUI", VIDEO: "COLE LINK DO VÍDEO MP4 AQUI" },
     DETALHES: { IMAGEM: "https://i.imgur.com/iBy2KpG.jpeg", VIDEO: "COLE LINK DO VÍDEO MP4 AQUI" },
-    FINAL: { IMAGEM: "https://i.imgur.com/Kf7iEs8.jpeg", VIDEO: "" }
+    FINAL: { IMAGEM: "https://i.imgur.com/Kf7iEs8.jpeg", VIDEO: "COLE LINK DO VÍDEO MP4 AQUI" }
   },
 
   /* CONFIRMAÇÃO DE PRESENÇA */
   RSVP: {
-    WHATSAPP: "COLE O NÚMERO DO WHATSAPP AQUI",    /* EX: 5561999999999 */
+    WHATSAPP: "COLE O NÚMERO DO WHATSAPP AQUI",    /* EX: 55619986024829 */
     WEBHOOK_URL: "COLE LINK DO GOOGLE SHEETS AQUI (OPCIONAL)",
     PEDIR_TELEFONE: true,
     PRAZO: "COLE A DATA LIMITE AQUI"               /* EX: 30/11 */
@@ -185,7 +205,19 @@ const CONFIG = {
 
 const C = CONFIG, T = C.TEXTOS, R = C.RSVP, $ = s => document.querySelector(s), enc = encodeURIComponent;
 const ok = v => !!v && !/AQUI/i.test(v);
+/* fontes configuráveis */
+const pesos = { 'Cormorant Garamond': ':ital,wght@0,400;0,500;0,600;1,400', 'Jost': ':wght@300;400;500' };
+const fam = [], ff = [];
+Object.values(C.FONTES).forEach(v => {
+  if (ok(v.ARQUIVO)) ff.push(`@font-face{font-family:'${v.FAMILIA}';src:url('${v.ARQUIVO}');font-display:swap}`);
+  else fam.push('family=' + enc(v.FAMILIA).replace(/%20/g, '+') + (pesos[v.FAMILIA] || ''));
+});
+if (ff.length) document.head.insertAdjacentHTML('beforeend', `<style>${ff.join('')}</style>`);
+if (fam.length) document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?${fam.join('&')}&display=swap">`);
 const root = document.documentElement.style;
+root.setProperty('--fn', `'${C.FONTES.SCRIPT.FAMILIA}','Brush Script MT',cursive`);
+root.setProperty('--ft', `'${C.FONTES.TITULO.FAMILIA}',Georgia,serif`);
+root.setProperty('--fx', `'${C.FONTES.TEXTO.FAMILIA}',system-ui,sans-serif`);
 root.setProperty('--bg', C.CORES.FUNDO); root.setProperty('--azul', C.CORES.AZUL);
 root.setProperty('--ouro', C.CORES.OURO); root.setProperty('--texto', C.CORES.TEXTO);
 
@@ -196,6 +228,13 @@ const dia = pad(d.getDate()), mes = cap(f({ month: 'long' })), ano = d.getFullYe
 const hora = `${pad(d.getHours())}h${pad(d.getMinutes())}`;
 const nome = C.NOME.toLowerCase().replace(/(^|\s)\S/g, c => c.toUpperCase());
 document.title = `${nome} • ${C.IDADE} anos`;
+const M = C.MONOGRAMA;
+const img = (src, w) => `<img class="mono" src="${src}" alt="${nome}" style="--mw:${w}px">`;
+const nomeHtml = ok(M.ARQUIVO) ? img(M.ARQUIVO, M.LARGURA || 520) : nome;
+const srcPais = ok(M.ARQUIVO_PAIS) ? M.ARQUIVO_PAIS : M.ARQUIVO;
+const nomePaisHtml = ok(srcPais) ? img(srcPais, M.LARGURA_PAIS || 340) : nome;
+const srcFinal = ok(M.ARQUIVO_FINAL) ? M.ARQUIVO_FINAL : M.ARQUIVO;
+const monoFinal = ok(srcFinal) && M.LARGURA_FINAL !== 0 ? img(srcFinal, M.LARGURA_FINAL || 300).replace('class="mono"', 'class="mono in"') : '';
 
 const mapa = ok(C.LINK_MAPS) ? C.LINK_MAPS : 'https://www.google.com/maps/search/?api=1&query=' + enc(C.LOCAL_NOME + ' ' + C.LOCAL_ENDERECO);
 const wa = (n, msg) => `https://wa.me/${String(n).replace(/\D/g, '')}?text=${enc(msg)}`;
@@ -210,7 +249,7 @@ const temDress = !!C.DRESS_CODE, temPres = ok(C.PRESENTE_TEXTO) || (C.PRESENTE_L
 const paginas = [
   `<section class="pg" id="p-capa">${bg('CAPA')}
     <p class="kicker in">${T.CAPA_TOPO}</p>
-    <h1 class="nomes in">${nome}</h1>
+    <h1 class="nomes in">${nomeHtml}</h1>
     <p class="rot in">${C.IDADE} anos</p>
     <p class="aviso in" style="opacity:.6;font-size:.8rem">Deslize para o lado ou toque em Próxima página</p></section>`,
 
@@ -219,7 +258,7 @@ const paginas = [
     <div class="pais in"><div><small>Pais</small>${C.PAIS.join('<br>')}</div></div>
     <div class="fio in"></div>
     <p class="kicker in">${T.PAIS_FRASE}</p>
-    <div class="nomes in" style="font-size:clamp(2.6rem,13vw,4.6rem)">${nome}</div></section>` : '',
+    <div class="nomes in" style="font-size:clamp(2.6rem,13vw,4.6rem)">${nomePaisHtml}</div></section>` : '',
 
   `<section class="pg">${bg('DATA')}
     <h2 class="in">${T.SAVE_TITULO}</h2>
@@ -245,6 +284,7 @@ const paginas = [
     ${temPres ? '<button class="btn in" id="bPres">Sugestões de presente</button>' : ''}</section>` : '',
 
   `<section class="pg" id="p-final">${bg('FINAL')}<div id="petalas" aria-hidden="true"></div>
+    ${monoFinal}
     <h2 class="in">${T.FINAL_TITULO}</h2>
     <p class="kicker in">${T.FINAL_FRASE}</p>
     <button class="btn ouro in" id="abrirRsvp">Confirmar presença</button>
