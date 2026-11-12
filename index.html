@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style>
 :root{--bg:#061a4a;--azul:#0c2a78;--ouro:#d4b16a;--texto:#f6ebcb;
-  --fn:'Pinyon Script','Brush Script MT',cursive;--ft:'Cormorant Garamond',Georgia,serif;--fx:'Jost',system-ui,sans-serif}
+  --fn:'Pinyon Script','Brush Script MT',cursive;--ft:'Cormorant Garamond',Georgia,serif;--fx:'Jost',system-ui,sans-serif;--fd:'Playfair Display',Georgia,serif}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);color:var(--texto);font-family:var(--fx);font-weight:300;-webkit-font-smoothing:antialiased}
 button{font:inherit;cursor:pointer;color:inherit}
@@ -36,6 +36,8 @@ button{font:inherit;cursor:pointer;color:inherit}
 h2{font-family:var(--ft);font-weight:500;font-size:clamp(1.9rem,7vw,2.8rem);line-height:1.15}
 .rot{font-size:.95rem;color:var(--ouro);letter-spacing:.02em}
 .grande{font-family:var(--ft);font-size:clamp(1.6rem,6vw,2.3rem)}
+.data{font-family:var(--fd);font-weight:400;font-size:clamp(1.5rem,5.6vw,2.1rem);letter-spacing:.02em;font-variant-numeric:lining-nums}
+.idade{font-family:var(--ft);font-size:clamp(2.2rem,10vw,3.4rem);color:var(--ouro);letter-spacing:.05em;line-height:1}
 .fio{width:56px;height:1px;background:var(--ouro)}
 .pais{display:flex;gap:36px;justify-content:center;flex-wrap:wrap}
 .pais div{font-family:var(--ft);font-size:1.2rem;line-height:1.5}
@@ -43,7 +45,7 @@ h2{font-family:var(--ft);font-weight:500;font-size:clamp(1.9rem,7vw,2.8rem);line
 .aviso{max-width:340px;font-size:.92rem;opacity:.8}
 .cont{display:flex;gap:10px;justify-content:center}
 .cont div{min-width:70px;padding:12px 6px;border:1px solid rgba(212,177,106,.55);border-radius:18px;background:rgba(255,255,255,.06)}
-.cont b{display:block;font-family:var(--ft);font-size:2rem;font-weight:500;line-height:1.1}
+.cont b{display:block;font-family:var(--fd);font-size:1.8rem;font-weight:500;line-height:1.2;font-variant-numeric:lining-nums}
 .cont span{font-size:.8rem;opacity:.8}
 
 /* botões com respiração suave em loop */
@@ -134,11 +136,13 @@ const CONFIG = {
 
   /* FONTES — TROQUE PELO NOME EXATO DE QUALQUER FONTE DO GOOGLE FONTS
      OU COLOQUE O ARQUIVO (.ttf, .woff, .woff2) NA MESMA PASTA E ESCREVA O NOME EM ARQUIVO
-     SCRIPT = NOME EM CURSIVA | TITULO = TÍTULOS E FRASES | TEXTO = TEXTOS MENORES E BOTÕES */
+     SCRIPT = NOME EM CURSIVA | TITULO = TÍTULOS E FRASES | TEXTO = TEXTOS MENORES E BOTÕES
+     DATA = DATA ESCRITA E NÚMEROS DA CONTAGEM (PÁGINAS "SALVE A DATA" E "QUANDO") */
   FONTES: {
     SCRIPT: { FAMILIA: "Pinyon Script",       ARQUIVO: "" },
     TITULO: { FAMILIA: "Cormorant Garamond",  ARQUIVO: "" },
-    TEXTO:  { FAMILIA: "Jost",                ARQUIVO: "" }
+    TEXTO:  { FAMILIA: "Jost",                ARQUIVO: "" },
+    DATA:   { FAMILIA: "Playfair Display",    ARQUIVO: "" }
   },
 
   /* DATA E HORA (AAAA-MM-DDTHH:MM:SS) — EXEMPLO, TROQUE PELA DATA REAL */
@@ -156,11 +160,12 @@ const CONFIG = {
 
   /* SUGESTÕES DE PRESENTE (JANELA NA PÁGINA "DETALHES") — TEXTO DE EXEMPLO, TROQUE */
   PRESENTE_TEXTO: "Sua presença é o nosso maior presente! Mas, se quiser nos presentear, aqui vão algumas sugestões:",
-  PRESENTE_LISTA: ["Vale-presente", "Lembrança carinhosa", "Contribuição via Pix"],
+  PRESENTE_LISTA: ["Vale-presente", "Lembrança carinhosa"],
   PIX: "COLE A CHAVE PIX AQUI",
   LISTA_LINK: "COLE LINK DA LISTA DE PRESENTES AQUI",
 
-  /* MÚSICA (LINK DO YOUTUBE OU ARQUIVO MP3) — COMEÇA NO PRIMEIRO TOQUE DO CONVIDADO */
+  /* MÚSICA (LINK DO YOUTUBE OU ARQUIVO MP3) — COMEÇA NO PRIMEIRO TOQUE DO CONVIDADO
+     LINKS DO GITHUB (github.com/.../blob/...) SÃO CONVERTIDOS AUTOMATICAMENTE PARA LINK DIRETO */
   MUSICA: "https://github.com/deyvisonmarlondf-hash/amandasantos/blob/main/Music15.mp3",
   SOM_VIRADA: "COLE O MP3 DO SOM DE VIRAR A PÁGINA AQUI (OPCIONAL)",
 
@@ -187,9 +192,9 @@ const CONFIG = {
 
   /* TEXTOS */
   TEXTOS: {
-    CAPA_TOPO: "Você está convidado(a)<br>para os meus 15 anos",
-    PAIS_TITULO: "Com a bênção de seus pais",
-    PAIS_FRASE: "convidam para a celebração<br>dos 15 anos de",
+    CAPA_TOPO: "Uma nova fase da minha vida<br>está para chegar…",
+    PAIS_TITULO: "Debaixo da bênção<br>dos meus pais",
+    PAIS_FRASE: "Convido você para celebrar<br>meus 15 anos",
     SAVE_TITULO: "Salve a data",
     DETALHES_TITULO: "Detalhes importantes",
     FINAL_TITULO: "Contamos com você",
@@ -206,7 +211,7 @@ const CONFIG = {
 const C = CONFIG, T = C.TEXTOS, R = C.RSVP, $ = s => document.querySelector(s), enc = encodeURIComponent;
 const ok = v => !!v && !/AQUI/i.test(v);
 /* fontes configuráveis */
-const pesos = { 'Cormorant Garamond': ':ital,wght@0,400;0,500;0,600;1,400', 'Jost': ':wght@300;400;500' };
+const pesos = { 'Cormorant Garamond': ':ital,wght@0,400;0,500;0,600;1,400', 'Jost': ':wght@300;400;500', 'Playfair Display': ':wght@400;500' };
 const fam = [], ff = [];
 Object.values(C.FONTES).forEach(v => {
   if (ok(v.ARQUIVO)) ff.push(`@font-face{font-family:'${v.FAMILIA}';src:url('${v.ARQUIVO}');font-display:swap}`);
@@ -218,6 +223,7 @@ const root = document.documentElement.style;
 root.setProperty('--fn', `'${C.FONTES.SCRIPT.FAMILIA}','Brush Script MT',cursive`);
 root.setProperty('--ft', `'${C.FONTES.TITULO.FAMILIA}',Georgia,serif`);
 root.setProperty('--fx', `'${C.FONTES.TEXTO.FAMILIA}',system-ui,sans-serif`);
+root.setProperty('--fd', `'${C.FONTES.DATA.FAMILIA}',Georgia,serif`);
 root.setProperty('--bg', C.CORES.FUNDO); root.setProperty('--azul', C.CORES.AZUL);
 root.setProperty('--ouro', C.CORES.OURO); root.setProperty('--texto', C.CORES.TEXTO);
 
@@ -250,24 +256,24 @@ const paginas = [
   `<section class="pg" id="p-capa">${bg('CAPA')}
     <p class="kicker in">${T.CAPA_TOPO}</p>
     <h1 class="nomes in">${nomeHtml}</h1>
-    <p class="rot in">${C.IDADE} anos</p>
+    <p class="idade in">${C.IDADE} anos</p>
     <p class="aviso in" style="opacity:.6;font-size:.8rem">Deslize para o lado ou toque em Próxima página</p></section>`,
 
   temPais ? `<section class="pg">${bg('PAIS')}
     <h2 class="in">${T.PAIS_TITULO}</h2>
-    <div class="pais in"><div><small>Pais</small>${C.PAIS.join('<br>')}</div></div>
+    <div class="pais in"><div>${C.PAIS.join('<br>')}</div></div>
     <div class="fio in"></div>
     <p class="kicker in">${T.PAIS_FRASE}</p>
     <div class="nomes in" style="font-size:clamp(2.6rem,13vw,4.6rem)">${nomePaisHtml}</div></section>` : '',
 
   `<section class="pg">${bg('DATA')}
     <h2 class="in">${T.SAVE_TITULO}</h2>
-    <p class="grande in">${dia} ${mes} · ${ano}</p>
+    <p class="data in">${dia} ${mes} · ${ano}</p>
     <div class="cont in" id="cont"></div></section>`,
 
   `<section class="pg">${bg('LOCAL')}
     <p class="rot in">Quando</p>
-    <p class="grande in">${dia} | ${mes} | ${ano}</p>
+    <p class="data in">${dia} | ${mes} | ${ano}</p>
     <p class="in">${sem}, às ${hora}</p>
     <div class="fio in"></div>
     <p class="rot in">Onde</p>
@@ -366,7 +372,7 @@ function conta() {
 conta(); setInterval(conta, 1000);
 
 /* música (YouTube ou MP3): começa no primeiro toque do convidado */
-const audio = $('#audio'), mb = $('#musicBtn'), MUS = ok(C.MUSICA) ? C.MUSICA : null;
+const audio = $('#audio'), mb = $('#musicBtn'), MUS = ok(C.MUSICA) ? String(C.MUSICA).replace(/^https?:\/\/github\.com\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/(.+)$/, 'https://cdn.jsdelivr.net/gh/$1/$2@$3/$4') : null;
 const ytId = u => { const m = String(u).match(/(?:youtu\.be\/|[?&]v=|\/shorts\/|\/embed\/|\/live\/)([\w-]{11})/); return m ? m[1] : null; };
 const MID = MUS && ytId(MUS);
 let mp = null, mReady = false, pend = false;
