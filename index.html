@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style>
 :root{--bg:#061a4a;--azul:#0c2a78;--ouro:#d4b16a;--texto:#f6ebcb;
-  --fn:'Pinyon Script','Brush Script MT',cursive;--ft:'Cormorant Garamond',Georgia,serif;--fx:'Jost',system-ui,sans-serif;--fd:'Playfair Display',Georgia,serif}
+  --fn:'Pinyon Script','Brush Script MT',cursive;--ft:'Cormorant Garamond',Georgia,serif;--fx:'Jost',system-ui,sans-serif;--fd:'Playfair Display',Georgia,serif;--fm:'Marcellus',Georgia,serif}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);color:var(--texto);font-family:var(--fx);font-weight:300;-webkit-font-smoothing:antialiased}
 button{font:inherit;cursor:pointer;color:inherit}
@@ -36,8 +36,9 @@ button{font:inherit;cursor:pointer;color:inherit}
 h2{font-family:var(--ft);font-weight:500;font-size:clamp(1.9rem,7vw,2.8rem);line-height:1.15}
 .rot{font-size:.95rem;color:var(--ouro);letter-spacing:.02em}
 .grande{font-family:var(--ft);font-size:clamp(1.6rem,6vw,2.3rem)}
+.convite{font-family:var(--fm);font-weight:400;font-style:normal;font-size:clamp(1.4rem,5.4vw,1.85rem);line-height:1.4;letter-spacing:.02em}
 .data{font-family:var(--fd);font-weight:400;font-size:clamp(1.5rem,5.6vw,2.1rem);letter-spacing:.02em;font-variant-numeric:lining-nums}
-.idade{font-family:var(--ft);font-size:clamp(2.2rem,10vw,3.4rem);color:var(--ouro);letter-spacing:.05em;line-height:1}
+.idade{font-family:var(--fm);font-weight:400;font-size:clamp(2.2rem,10vw,3.4rem);color:var(--ouro);letter-spacing:.05em;line-height:1}
 .fio{width:56px;height:1px;background:var(--ouro)}
 .pais{display:flex;gap:36px;justify-content:center;flex-wrap:wrap}
 .pais div{font-family:var(--ft);font-size:1.2rem;line-height:1.5}
@@ -137,12 +138,14 @@ const CONFIG = {
   /* FONTES — TROQUE PELO NOME EXATO DE QUALQUER FONTE DO GOOGLE FONTS
      OU COLOQUE O ARQUIVO (.ttf, .woff, .woff2) NA MESMA PASTA E ESCREVA O NOME EM ARQUIVO
      SCRIPT = NOME EM CURSIVA | TITULO = TÍTULOS E FRASES | TEXTO = TEXTOS MENORES E BOTÕES
-     DATA = DATA ESCRITA E NÚMEROS DA CONTAGEM (PÁGINAS "SALVE A DATA" E "QUANDO") */
+     DATA = DATA ESCRITA E NÚMEROS DA CONTAGEM (PÁGINAS "SALVE A DATA" E "QUANDO")
+     DESTAQUE = "15 ANOS" DA CAPA E FRASE "CONVIDO VOCÊ..." DA PÁGINA DOS PAIS */
   FONTES: {
     SCRIPT: { FAMILIA: "Pinyon Script",       ARQUIVO: "" },
     TITULO: { FAMILIA: "Cormorant Garamond",  ARQUIVO: "" },
     TEXTO:  { FAMILIA: "Jost",                ARQUIVO: "" },
-    DATA:   { FAMILIA: "Playfair Display",    ARQUIVO: "" }
+    DATA:   { FAMILIA: "Playfair Display",    ARQUIVO: "" },
+    DESTAQUE: { FAMILIA: "Marcellus",         ARQUIVO: "" }
   },
 
   /* DATA E HORA (AAAA-MM-DDTHH:MM:SS) — EXEMPLO, TROQUE PELA DATA REAL */
@@ -193,7 +196,7 @@ const CONFIG = {
   /* TEXTOS */
   TEXTOS: {
     CAPA_TOPO: "Uma nova fase da minha vida<br>está para chegar…",
-    PAIS_TITULO: "Debaixo da bênção<br>dos meus pais",
+    PAIS_TITULO: "Debaixo da benção<br>dos meus pais",
     PAIS_FRASE: "Convido você para celebrar<br>meus 15 anos",
     SAVE_TITULO: "Salve a data",
     DETALHES_TITULO: "Detalhes importantes",
@@ -224,6 +227,7 @@ root.setProperty('--fn', `'${C.FONTES.SCRIPT.FAMILIA}','Brush Script MT',cursive
 root.setProperty('--ft', `'${C.FONTES.TITULO.FAMILIA}',Georgia,serif`);
 root.setProperty('--fx', `'${C.FONTES.TEXTO.FAMILIA}',system-ui,sans-serif`);
 root.setProperty('--fd', `'${C.FONTES.DATA.FAMILIA}',Georgia,serif`);
+root.setProperty('--fm', `'${C.FONTES.DESTAQUE.FAMILIA}',Georgia,serif`);
 root.setProperty('--bg', C.CORES.FUNDO); root.setProperty('--azul', C.CORES.AZUL);
 root.setProperty('--ouro', C.CORES.OURO); root.setProperty('--texto', C.CORES.TEXTO);
 
@@ -263,7 +267,7 @@ const paginas = [
     <h2 class="in">${T.PAIS_TITULO}</h2>
     <div class="pais in"><div>${C.PAIS.join('<br>')}</div></div>
     <div class="fio in"></div>
-    <p class="kicker in">${T.PAIS_FRASE}</p>
+    <p class="convite in">${T.PAIS_FRASE}</p>
     <div class="nomes in" style="font-size:clamp(2.6rem,13vw,4.6rem)">${nomePaisHtml}</div></section>` : '',
 
   `<section class="pg">${bg('DATA')}
